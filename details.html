@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Details – TourMate</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="details-page">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar glass-card">
+        <a href="index.html" class="sidebar-logo">TourMate</a>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="details.html" class="active">Client Details</a>
+            <a href="dashboard.html#plans">Future Plans</a>
+            <a href="dashboard.html#hotel">Preferred Hotel</a>
+            <a href="dashboard.html#map">Map</a>
+        </nav>
+        <a href="index.html" class="btn btn-logout" onclick="handleLogout(event)">Logout</a>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="details-main">
+        <header class="dashboard-header glass-header">
+            <h1>Client Details</h1>
+            <a href="dashboard.html" class="btn btn-secondary">← Back to Dashboard</a>
+        </header>
+
+        <div class="details-content">
+            <!-- Client Form -->
+            <div class="glass-card form-card">
+                <h3>Add New Client</h3>
+                <form id="clientForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="clientName">Client Name *</label>
+                            <input type="text" id="clientName" name="clientName" placeholder="Enter client name" required>
+                            <span class="error-msg" id="clientNameError"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="destination">Destination *</label>
+                            <input type="text" id="destination" name="destination" placeholder="e.g., Ooty, Goa" required>
+                            <span class="error-msg" id="destinationError"></span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="days">Number of Days *</label>
+                            <input type="number" id="days" name="days" min="1" max="90" placeholder="e.g., 5" required>
+                            <span class="error-msg" id="daysError"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="budget">Budget (₹) *</label>
+                            <input type="number" id="budget" name="budget" min="1000" placeholder="e.g., 25000" required>
+                            <span class="error-msg" id="budgetError"></span>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Generate Plan & Save</button>
+                </form>
+            </div>
+
+            <!-- Tour Summary & Recommendations (generated dynamically) -->
+            <div class="glass-card summary-card" id="summaryCard" style="display: none;">
+                <h3>📋 Tour Summary</h3>
+                <div id="tourSummary"></div>
+                <h4>🏨 Recommended Hotel</h4>
+                <div id="recommendedHotel"></div>
+            </div>
+
+            <!-- Stored Clients Table -->
+            <div class="glass-card clients-table-card">
+                <h3>Saved Clients</h3>
+                <div class="table-wrapper">
+                    <table class="clients-table">
+                        <thead>
+                            <tr>
+                                <th>Client Name</th>
+                                <th>Destination</th>
+                                <th>Days</th>
+                                <th>Budget</th>
+                                <th>Recommended Hotel</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="clientsTableBody">
+                            <!-- Populated by JavaScript -->
+                        </tbody>
+                    </table>
+                    <p id="noClientsMsg" class="no-data-msg">No clients saved yet. Add a client above.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        // Client form validation and submission
+        document.getElementById('clientForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const clientName = document.getElementById('clientName').value.trim();
+            const destination = document.getElementById('destination').value.trim();
+            const days = parseInt(document.getElementById('days').value) || 0;
+            const budget = parseInt(document.getElementById('budget').value) || 0;
+            
+            const nameError = document.getElementById('clientNameError');
+            const destError = document.getElementById('destinationError');
+            const daysError = document.getElementById('daysError');
+            const budgetError = document.getElementById('budgetError');
+            
+            // Reset errors
+            [nameError, destError, daysError, budgetError].forEach(el => el.textContent = '');
+            
+            let isValid = true;
+            
+            if (clientName.length < 2) {
+                nameError.textContent = 'Name must be at least 2 characters';
+                isValid = false;
+            }
+            if (destination.length < 2) {
+                destError.textContent = 'Enter a valid destination';
+                isValid = false;
+            }
+            if (days < 1 || days > 90) {
+                daysError.textContent = 'Enter days between 1 and 90';
+                isValid = false;
+            }
+            if (budget < 1000) {
+                budgetError.textContent = 'Budget must be at least ₹1,000';
+                isValid = false;
+            }
+            
+            if (isValid) {
+                const client = {
+                    id: Date.now(),
+                    clientName,
+                    destination,
+                    days,
+                    budget,
+                    recommendedHotel: getRecommendedHotel(budget),
+                    perDayBudget: Math.round(budget / days),
+                    date: new Date().toLocaleDateString()
+                };
+                
+                // Save to localStorage
+                saveClient(client);
+                
+                // Show summary
+                showTourSummary(client);
+                
+                // Refresh table
+                renderClientsTable();
+                
+                // Reset form
+                document.getElementById('clientForm').reset();
+            }
+        });
+        
+        // Load and display clients on page load
+        document.addEventListener('DOMContentLoaded', renderClientsTable);
+    </script>
+</body>
+</html>

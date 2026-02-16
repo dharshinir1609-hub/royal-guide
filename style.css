@@ -1,0 +1,730 @@
+/**
+ * TourMate – Smart Tourist Guide Web App
+ * Modern glassmorphism UI with gradients and responsive design
+ */
+
+/* ============ CSS Variables ============ */
+:root {
+    --primary: #1e3a8a;             /* Royal Blue */
+    --primary-dark: #172554;        /* Dark Royal Blue */
+    --secondary: #4c1d95;           /* Deep Purple */
+    --accent: #d4af37;              /* Royal Gold */
+
+    --glass-bg: rgba(255, 255, 255, 0.08);
+    --glass-border: rgba(212, 175, 55, 0.4);
+    --glass-shadow: rgba(0, 0, 0, 0.3);
+
+    --text-light: #f8f5e9;          /* Soft Cream */
+    --text-muted: rgba(248, 245, 233, 0.75);
+
+    --gradient-1: linear-gradient(135deg, #1e3a8a 0%, #4c1d95 100%);
+    --gradient-2: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #4c1d95 100%);
+    --gradient-hero: linear-gradient(
+        135deg,
+        rgba(15, 23, 42, 0.95) 0%,
+        rgba(30, 58, 138, 0.9) 50%,
+        rgba(76, 29, 149, 0.85) 100%
+    );
+
+    --radius: 16px;
+    --radius-sm: 8px;
+    --transition: all 0.3s ease;
+    --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+
+/* ============ Reset & Base ============ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font);
+    background: var(--gradient-2);
+    background-attachment: fixed;
+    min-height: 100vh;
+    color: var(--text-light);
+    line-height: 1.6;
+}
+
+/* ============ Glass Effect Card ============ */
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    box-shadow: 0 8px 32px var(--glass-shadow);
+    padding: 24px;
+    transition: var(--transition);
+}
+
+.glass-card:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* ============ Glass Header ============ */
+.glass-header {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo,
+.sidebar-logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-light);
+    text-decoration: none;
+    letter-spacing: -0.5px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+}
+
+.nav-links a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+}
+
+.nav-links a:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Mobile menu button */
+.mobile-menu-btn {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+}
+
+.mobile-menu-btn span {
+    width: 24px;
+    height: 2px;
+    background: white;
+    border-radius: 2px;
+    transition: var(--transition);
+}
+
+.mobile-menu-btn.active span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+}
+
+.mobile-menu-btn.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-btn.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* ============ Buttons ============ */
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: var(--font);
+}
+
+.btn-primary {
+    background: var(--gradient-1);
+    color: white;
+    box-shadow: 0 4px 14px rgba(102, 126, 234, 0.4);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid var(--glass-border);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.btn-full {
+    width: 100%;
+}
+
+.btn-small {
+    padding: 6px 12px;
+    font-size: 0.875rem;
+}
+
+.btn-danger {
+    background: rgba(239, 68, 68, 0.8);
+    color: white;
+}
+
+.btn-danger:hover {
+    background: rgba(220, 38, 38, 1);
+}
+
+.btn-logout {
+    margin-top: auto;
+    background: rgba(239, 68, 68, 0.6);
+    color: white;
+    text-align: center;
+    width: 100%;
+}
+
+.btn-logout:hover {
+    background: rgba(220, 38, 38, 0.9);
+}
+
+/* ============ Landing Hero (Full HD) ============ */
+.hero-wrapper {
+    min-height: 100vh;
+    position: relative;
+}
+
+.hero-bg {
+    position: absolute;
+    inset: 0;
+    background: url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1920') center/cover no-repeat;
+    background-size: cover;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: var(--gradient-hero);
+}
+
+.hero-section {
+    position: relative;
+    z-index: 1;
+    min-height: calc(100vh - 70px);
+}
+
+.hero-content .display-4 {
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+
+.logo-text {
+    font-size: 1.5rem;
+}
+
+.glass-nav-link {
+    color: rgba(255, 255, 255, 0.9) !important;
+    padding: 8px 14px !important;
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+}
+
+.glass-nav-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: white !important;
+}
+
+.navbar-toggler-icon {
+    filter: invert(1);
+}
+
+/* ============ Hero Section (legacy) ============ */
+.hero {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    background: url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1920') center/cover no-repeat;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    padding: 40px;
+}
+
+.hero h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+
+.hero p {
+    font-size: 1.25rem;
+    margin-bottom: 32px;
+    opacity: 0.95;
+}
+
+.hero .btn {
+    margin: 0 8px 8px 0;
+}
+
+/* ============ Features Section ============ */
+.features {
+    padding: 80px 24px;
+}
+
+.features .container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.features h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 48px;
+}
+
+.feature-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+.feature-card {
+    text-align: center;
+}
+
+.feature-icon {
+    font-size: 3rem;
+    margin-bottom: 16px;
+}
+
+.feature-card h3 {
+    margin-bottom: 12px;
+    font-size: 1.25rem;
+}
+
+.feature-card p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+/* ============ Footer ============ */
+.glass-footer {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid var(--glass-border);
+    padding: 48px 24px 24px;
+    text-align: center;
+}
+
+.footer-content {
+    max-width: 800px;
+    margin: 0 auto 24px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 32px;
+}
+
+.footer-info h4 {
+    margin-bottom: 8px;
+}
+
+.footer-info p,
+.footer-copy {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.social-links {
+    display: flex;
+    gap: 16px;
+}
+
+.social-links a {
+    color: var(--text-light);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.social-links a:hover {
+    opacity: 0.8;
+}
+
+.footer-copy {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid var(--glass-border);
+}
+
+/* ============ Login Page ============ */
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.login-overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--gradient-2);
+    z-index: 0;
+}
+
+.back-home {
+    position: fixed;
+    top: 24px;
+    left: 24px;
+    color: var(--text-light);
+    text-decoration: none;
+    font-weight: 500;
+    z-index: 10;
+    transition: var(--transition);
+}
+
+.back-home:hover {
+    opacity: 0.9;
+}
+
+.login-container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 420px;
+    padding: 24px;
+}
+
+.login-card {
+    padding: 40px;
+}
+
+.login-card h1 {
+    margin-bottom: 8px;
+    font-size: 1.75rem;
+}
+
+.login-subtitle {
+    color: var(--text-muted);
+    margin-bottom: 32px;
+}
+
+.login-hint {
+    margin-top: 16px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* ============ Form Styles ============ */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 1rem;
+}
+
+.form-group input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.glass-input {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--glass-border);
+    color: white;
+}
+
+.glass-input:focus {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--primary);
+    color: white;
+}
+
+.glass-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.form-select.glass-input option {
+    background: #1e3a8a;
+    color: white;
+}
+
+.glass-list-item {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.error-msg {
+    display: block;
+    color: #fca5a5;
+    font-size: 0.85rem;
+    margin-top: 4px;
+}
+
+/* ============ Dashboard Layout ============ */
+.dashboard-page,
+.details-page {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 260px;
+    min-height: 100vh;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 32px;
+    flex: 1;
+}
+
+.sidebar-nav a {
+    color: var(--text-light);
+    text-decoration: none;
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+}
+
+.sidebar-nav a:hover,
+.sidebar-nav a.active {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Main content */
+.dashboard-main,
+.details-main {
+    flex: 1;
+    padding: 24px;
+    overflow-x: hidden;
+}
+
+.dashboard-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.welcome-msg {
+    color: var(--text-muted);
+}
+
+.dashboard-content,
+.details-content {
+    max-width: 900px;
+}
+
+.welcome-card {
+    margin-bottom: 24px;
+}
+
+.welcome-card h2 {
+    margin-bottom: 8px;
+}
+
+.dashboard-section {
+    margin-bottom: 24px;
+}
+
+.dashboard-section h3 {
+    margin-bottom: 16px;
+    font-size: 1.25rem;
+}
+
+.plans-list p {
+    margin-bottom: 8px;
+}
+
+.text-muted {
+    color: var(--text-muted);
+}
+
+.map-section iframe {
+    width: 100%;
+    border-radius: var(--radius-sm);
+}
+
+/* ============ Client Details Page ============ */
+.form-card,
+.summary-card,
+.clients-table-card {
+    margin-bottom: 24px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+@media (max-width: 600px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+.form-card h3,
+.summary-card h3,
+.clients-table-card h3 {
+    margin-bottom: 20px;
+}
+
+.summary-card h4 {
+    margin-top: 20px;
+    margin-bottom: 12px;
+}
+
+#tourSummary p,
+#recommendedHotel p {
+    margin-bottom: 8px;
+}
+
+/* Clients Table */
+.table-wrapper {
+    overflow-x: auto;
+}
+
+.clients-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.clients-table th,
+.clients-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.clients-table th {
+    font-weight: 600;
+}
+
+.clients-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.table-dark {
+    --bs-table-bg: rgba(255, 255, 255, 0.05);
+    --bs-table-border-color: var(--glass-border);
+    --bs-table-hover-bg: rgba(255, 255, 255, 0.08);
+}
+
+.no-data-msg {
+    text-align: center;
+    padding: 32px;
+    color: var(--text-muted);
+}
+
+/* ============ Container ============ */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ============ Responsive ============ */
+@media (max-width: 900px) {
+    .sidebar {
+        display: none;
+    }
+
+    .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        background: var(--glass-bg);
+        backdrop-filter: blur(12px);
+        padding: 16px;
+    }
+
+    .nav-links.open {
+        display: flex;
+    }
+
+    .mobile-menu-btn {
+        display: flex;
+    }
+
+    .hero-content {
+        padding: 24px;
+    }
+
+    .features {
+        padding: 48px 24px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .clients-table th,
+    .clients-table td {
+        padding: 8px;
+        font-size: 0.875rem;
+    }
+}
